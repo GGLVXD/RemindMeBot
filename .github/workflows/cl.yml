@@ -1,0 +1,17 @@
+name: Deploy
+
+on:
+  push:
+    branches:
+      - main
+jobs:
+  deploy:
+    steps:
+      uses: cloudflare/wrangler-action@2.0.0
+      with:
+        apiToken: ${{ secrets.CF_API_TOKEN }}
+        preCommands: echo "*** pre command ***"
+        postCommands: |
+          echo "*** post commands ***"
+          wrangler kv:key put --binding=MY_KV key2 value2
+          echo "******"
